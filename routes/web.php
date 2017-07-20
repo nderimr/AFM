@@ -12,5 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome', ['name'=>'Nderim']);
+    return view('/home', ['name'=>'Nderim']);
 });
+
+Route::resource('articles','ArticlesController');
+
+Route::get('test', function()
+{
+	return view('test');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
