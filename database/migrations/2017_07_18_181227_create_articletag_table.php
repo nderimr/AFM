@@ -14,8 +14,11 @@ class CreateArticletagTable extends Migration
     public function up()
     {
         Schema::create('articles_tags', function (Blueprint $table) {
-            $table->integer('article_id');
-            $table->integer('tag_id');
+            $table->integer('article_id')->unsigned();
+            $table->foreign('article_id')->references('id')->on('articles'); 
+            $table->integer('tag_id')->unsigned();
+            $table->foreign('tag_id')->references('id')->on('tags');
+
 
             $table->timestamps();
         });

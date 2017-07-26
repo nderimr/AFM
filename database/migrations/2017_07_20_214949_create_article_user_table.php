@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivitiesLogsTable extends Migration
+class CreateArticleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateActivitiesLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_log', function (Blueprint $table) {
-            $table->integer('activity_id')->unsigned();
-            $table->foreign('activity_id')->references('id')->on('activities');
+        Schema::create('article_user', function (Blueprint $table) {
             $table->integer('article_id')->unsigned();
             $table->foreign('article_id')->references('id')->on('articles');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('transition_id')->nullable();
-            $table->datetime('execution_date');
+
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateActivitiesLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_log');
+        Schema::dropIfExists('article_user');
     }
 }

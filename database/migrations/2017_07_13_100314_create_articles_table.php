@@ -18,11 +18,10 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->string('author');
             $table->string('type');
             $table->string('workflowName');
             $table->string('state');
-            $table->integer('author_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
