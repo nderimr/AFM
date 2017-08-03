@@ -12,18 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
-
-    return [
-        'name' => $faker->name,
-        'surname'=>$faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
-    ];
-}); */
-
+*/
 $factory->define(App\User::class, 
 	function (Faker\Generator $faker) 
 	{
@@ -35,6 +24,20 @@ $factory->define(App\User::class,
         'surname'=>$faker->name,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+    }
+);
+
+$factory->define(App\Article::class, 
+    function (Faker\Generator $faker) 
+    {
+     
+      return [
+        'title' => $faker->sentence($nbWords = 5),
+        'content' => $faker->sentence($nbWords = 250),
+        'type'=>str_random(5),
+        'workflowName' => str_random(20),
+        'state' => str_random(5),
     ];
     }
 );

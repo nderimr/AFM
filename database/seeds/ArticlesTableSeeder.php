@@ -12,7 +12,9 @@ class ArticlesTableSeeder extends Seeder
  
     public function run()
     {
-        $content='';
+      $article = factory(App\Article::class,10)->create();
+
+       /* $content='';
         for($i=0;$i<220;$i++)
             $content=$content.' '.str_random(7); 
         
@@ -22,6 +24,6 @@ class ArticlesTableSeeder extends Seeder
             'type' => str_random(20),
             'workflowName' => str_random(20),
             'state' => str_random(5),
-        ]);
+        ]);*/
     }
 }
