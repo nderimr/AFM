@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the articles sorted by creation date .
      *
@@ -26,7 +31,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+        return view('articles.create');
     }
 
     /**

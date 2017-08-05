@@ -12,7 +12,11 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory 
+* Create a user with random data using Faker\Generator::class 
 */
+use App\Article;
+use App\User;
+
 $factory->define(App\User::class, 
 	function (Faker\Generator $faker) 
 	{
@@ -28,16 +32,70 @@ $factory->define(App\User::class,
     }
 );
 
+
+
 $factory->define(App\Article::class, 
+    function (Faker\Generator $faker) 
+    {
+         return [
+        'title' => $faker->sentence(5),
+        'content' => $faker->sentence(250),
+        'type'=>$faker->word,
+        'workflowName' => $faker->word,
+        'state' => $faker->word,
+
+    ];
+    }
+);
+//generates file and to every file ataches a random Article_id 
+$factory->define(App\File::class, 
+    function (Faker\Generator $faker) 
+    {
+     
+       $articles=Article::all()->pluck('id')->toArray(); //select ID's from articles table
+      return [
+        'path' => $faker->word,
+        'type' => $faker->word,
+        'size'=> $faker->randomNumber(5,false),
+        'description' => $faker->sentence(10),
+         'article_id' =>$faker->randomElement($articles),
+         /* function () { 
+           return factory(App\Article::class)->create()->id;
+        }*/
+    ];
+    }
+);
+
+
+$factory->define(App\Comment::class, 
+    function (Faker\Generator $faker) 
+    {
+      $articles=Article::all()->pluck('id')->toArray(); //select ID's from articles table
+      $users=User::all()->pluck('id')->toArray(); //select ID's from articles table
+          return [
+          'content' => $faker->sentence(20),
+          'date_created' => $faker->date('Y-m-d','now'),
+          'user_id'=>$faker->randomElement($users),
+          /*function () { 
+             return factory(App\User::class)->create()->id;
+             },*/
+        
+          'article_id'=>$faker->randomElement($articles),
+          /*function () { 
+              return factory(App\Article::class)->create()->id;
+        }*/
+        
+    ];
+    }
+);
+
+
+$factory->define(App\Tag::class, 
     function (Faker\Generator $faker) 
     {
      
       return [
-        'title' => $faker->sentence($nbWords = 5),
-        'content' => $faker->sentence($nbWords = 250),
-        'type'=>str_random(5),
-        'workflowName' => str_random(20),
-        'state' => str_random(5),
-    ];
+        'name'=>$faker->word,
+        ];
     }
 );

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('/home', ['name'=>'Nderim']);
-});
+Route::get('/','HomeController@index');
 
 Route::resource('articles','ArticlesController');
 
