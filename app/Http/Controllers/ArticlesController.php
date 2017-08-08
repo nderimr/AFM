@@ -20,7 +20,10 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles=Article::all()->sortByDesc('created_at');
-        
+        foreach ($Article as $article) {
+            if(!($article->user()===null))
+               $article->user()->atach();
+        }
         return view('articles.index')->with('articles',$articles);
     }
 
