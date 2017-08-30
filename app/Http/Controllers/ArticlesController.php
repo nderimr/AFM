@@ -19,11 +19,10 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles=Article::all()->sortByDesc('created_at');
-        foreach ($Article as $article) {
-            if(!($article->user()===null))
-               $article->user()->atach();
-        }
+         $articles=Article::with('users')->get();
+        // $articles=Article::all()->sortByDesc('created_at');
+         //$user= $article->users()->get(); //getting the articles users
+           
         return view('articles.index')->with('articles',$articles);
     }
 
@@ -54,9 +53,12 @@ class ArticlesController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($id)
     {
-        //
+       // return view('articles.show');
+        $article=Article::with('users','comments','tags','files')->get()->find($id);
+        
+        return view('articles.show')->with('article',$article);
     }
 
     /**
