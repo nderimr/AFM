@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Input;
 use App\Article;
+use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ArticlesController extends Controller
 {
@@ -33,7 +36,10 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $types=array('scientific', 'politics', 'tech', 'fun');
+        $tags=Tag::pluck('name','id');
+        $workflows=array('one'=>'one', 'two'=>'two', 'three'=>'three');
+        return view('articles.create')->with('types',$types)->with('tags',$tags)->with('workflows',$workflows);
     }
 
     /**
@@ -44,7 +50,24 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        
+        $article=Auth::user()->articles()->create($request->all());
+        $article->tags()->attach($request->input('tags_list'));
+          //Move Uploaded File
+         $uploadedfile = $request->file('fileUpload');
+          $path = $request->file('fileUpload')->store('avatars');
+         
+        
+         $destinationPath = 'storage/images';
+         $extension=$uploadedfile->getClientOriginalExtension();
+         //dd($destinationPath);
+         $uploadedfile->move($path,$uploadedfile);//->getClientOriginalName());
+         return redirect('articles');
+       
+      //  $article->state='initial';
+
+
     }
 
     /**
