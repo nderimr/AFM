@@ -76,16 +76,8 @@ $factory->define(App\Comment::class,
           'content' => $faker->sentence(20),
           'date_created' => $faker->date('Y-m-d','now'),
           'user_id'=>$faker->randomElement($users),
-          /*function () { 
-             return factory(App\User::class)->create()->id;
-             },*/
-        
           'article_id'=>$faker->randomElement($articles),
-          /*function () { 
-              return factory(App\Article::class)->create()->id;
-        }*/
-        
-    ];
+      ];
     }
 );
 

@@ -23,10 +23,7 @@ class ArticlesController extends Controller
     public function index()
     {
          $articles=Article::with('users')->get();
-        // $articles=Article::all()->sortByDesc('created_at');
-         //$user= $article->users()->get(); //getting the articles users
-           
-        return view('articles.index')->with('articles',$articles);
+         return view('articles.index')->with('articles',$articles);
     }
 
     /**
@@ -50,25 +47,16 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        
-        $article=Auth::user()->articles()->create($request->all());
+       $article=Auth::user()->articles()->create($request->all());
         $article->tags()->attach($request->input('tags_list'));
           //Move Uploaded File
          $uploadedfile = $request->file('fileUpload');
-          $path = $request->file('fileUpload')->store('avatars');
-         
-        
+         $path = $request->file('fileUpload')->store('avatars');
          $destinationPath = 'storage/images';
          $extension=$uploadedfile->getClientOriginalExtension();
-         //dd($destinationPath);
          $uploadedfile->move($path,$uploadedfile);//->getClientOriginalName());
          return redirect('articles');
-       
-      //  $article->state='initial';
-
-
-    }
+       }
 
     /**
      * Display the specified resource.
@@ -78,9 +66,7 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-       // return view('articles.show');
         $article=Article::with('users','comments','tags','files')->get()->find($id);
-        
         return view('articles.show')->with('article',$article);
     }
 

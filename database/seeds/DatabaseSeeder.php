@@ -13,9 +13,11 @@ class DatabaseSeeder extends Seeder
     {
         
         // $this->call(UsersTableSeeder::class);
+         $this->call(TagsTableSeeder::class);
          $this->call(ArticlesTableSeeder::class);
          $this->call(UsersTableSeeder::class);
         // factory(App\User::class,5)->create();
+         
          $this->call(FilesTableSeeder::class);
         $this->call(CommentsTableSeeder::class); 
     }
