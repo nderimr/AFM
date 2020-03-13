@@ -46,8 +46,15 @@ class ArticlesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-       $article=Auth::user()->articles()->create($request->all());
+    {  
+       
+             $this->validate($request, [
+             'title' => 'required',
+             'content' => 'required',
+              ]);
+           dd($request->all());
+
+        $article=Auth::user()->articles()->create($request->all());
         $article->tags()->attach($request->input('tags_list'));
           //Move Uploaded File
          $uploadedfile = $request->file('fileUpload');
