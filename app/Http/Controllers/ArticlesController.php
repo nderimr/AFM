@@ -52,7 +52,7 @@ class ArticlesController extends Controller
              'title' => 'required',
              'content' => 'required',
               ]);
-           dd($request->all());
+          
 
         $article=Auth::user()->articles()->create($request->all());
         $article->tags()->attach($request->input('tags_list'));
